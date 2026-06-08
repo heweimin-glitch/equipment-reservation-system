@@ -22,7 +22,7 @@ Page({
   getDeviceList(){
     const user = wx.getStorageSync('userInfo')
     wx.request({
-      url:'http://10.69.174.110:8080/device/xxlist',
+      url:config.baseUrl + '/device/xxlist',
       method:'GET',
       data:{
         adminId:user.id
@@ -55,7 +55,7 @@ Page({
         if(res.confirm){
 
           wx.request({
-            url:'http://10.69.174.110:8080/device/addNumber',
+            url:config.baseUrl + '/device/addNumber',
             method:'POST',
             data:{id, number:num},
             success:()=>{
@@ -87,7 +87,7 @@ Page({
         if(res.confirm){
 
           wx.request({
-            url:'http://10.69.174.110:8080/device/reduceNumber',
+            url:config.baseUrl + '/device/reduceNumber',
             method:'POST',
             data:{id, number:num},
             success:(res)=>{
@@ -128,7 +128,7 @@ Page({
     setTimeout(() => {
       console.log(d)
       wx.request({
-        url:'http://10.69.174.110:8080/device/add',
+        url:config.baseUrl + '/device/add',
         method:'POST',
         data:d,
   

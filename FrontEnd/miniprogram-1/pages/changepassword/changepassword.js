@@ -19,7 +19,7 @@ Page({
   submit(){
     const user = wx.getStorageSync('userInfo')
     wx.request({
-      url:'http://10.69.174.110:8080/user/updatePassword',
+      url: config.baseUrl + '/user/updatePassword',
       method:'POST',
       data:{
         id:user.id,

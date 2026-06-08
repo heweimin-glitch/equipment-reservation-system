@@ -1,190 +1,5 @@
-// Page({
-//   data: {
-//     currentReservations: [],
-//     statusMap:{
-//       0:'待审批',
-//       1:'未通过',
-//       2:'已取消',
-//       3:'使用中',
-//       4:'已完成'
-//     }
-//   },
 
-//   onLoad(){
-//     const user = wx.getStorageSync('userInfo')
-//     this.setData({
-//       userInfo:user
-//     })
-  
-//     this.getCurrentReservations()
-//   },
-
-// //获取当前预约
-//   getCurrentReservations(){
-//     const user = this.data.userInfo
-//     wx.request({
-//       url:'http://192.168.31.91:8080/reservation/current',
-//       method:'GET',
-//       data:{
-//         applyId:user.id,
-//         isAdmin:user.is_admin
-//       },
-  
-//       success:(res)=>{
-//         const list = res.data.map(item=>{
-//           return {
-//             ...item,
-//             statusText:this.data.statusMap[item.status]
-//           }
-//         })
-//         this.setData({
-//           currentReservations:list
-//         })
-//       }
-//     })
-//   },
-
-
-
-//   // 处理操作按钮（取消/归还）
-//   handleAction(e) {
-
-//     const { id, status, index } = e.currentTarget.dataset;
-//     const device = this.data.currentReservations[index];
-  
-//     this.setData({
-//       currentAction: {
-//         id,
-//         index,
-//         status,
-//         deviceName: device.deviceName,
-//         location: device.address
-//       }
-//     });
-  
-//     // ⭐ 取消预约（待审批 or 未通过）
-//     if (status == 0 || status == 1) {
-  
-//       wx.showModal({
-//         title: '确认取消',
-//         content: `确定要取消【${device.deviceName}】的预约吗？`,
-//         success: (res) => {
-//           if (res.confirm) {
-//             this.cancelReservation();
-//           }
-//         }
-//       });
-  
-//     //  归还设备（使用中）
-//     } else if (status == 3) {
-  
-//       wx.showModal({
-//         title: '归还确认',
-//         content: `确认已将设备【${device.deviceName}】归还至【${device.address}】吗？`,
-//         success: (res) => {
-//           if (res.confirm) {
-//             this.returnDevice();
-//           }
-//         }
-//       });
-//     }
-//   },
-
-//   cancelReservation() {
-//     const { id } = this.data.currentAction;
-  
-//     // ⭐ 1. 先显示加载动画
-//     wx.showLoading({
-//       title: '取消中...',
-//       mask: true
-//     });
-  
-//     // ⭐ 2. 加延迟（模拟服务器处理 + 过渡感）
-//     setTimeout(() => {
-  
-//       wx.request({
-//         url: 'http://192.168.31.91:8080/reservation/cancel',
-//         method: 'POST',
-//         data: { id },
-  
-//         success: (res) => {
-  
-//           wx.hideLoading();
-  
-//           wx.showToast({
-//             title: '已取消预约',
-//             icon: 'success',
-//             duration: 1200
-//           });
-  
-//           // ⭐ 3. 延迟刷新列表（更丝滑）
-//           setTimeout(() => {
-//             this.getCurrentReservations();
-//           }, 300);
-//         },
-  
-//         fail: (err) => {
-//           wx.hideLoading();
-  
-//           wx.showToast({
-//             title: '取消失败',
-//             icon: 'none'
-//           });
-  
-//           console.log(err);
-//         }
-//       });
-  
-//     }, 600); // ⭐ 关键：过渡延迟
-//   },
- 
-//   returnDevice() {
-//     const { id } = this.data.currentAction;
-  
-//     wx.showLoading({
-//       title: '归还中...',
-//       mask: true
-//     });
-  
-//     setTimeout(() => {
-//       wx.request({
-//         url: 'http://192.168.31.91:8080/reservation/finish',
-//         method: 'POST',
-//         data: { id },
-  
-//         success: () => {
-  
-//           wx.hideLoading();
-  
-//           wx.showToast({
-//             title: '归还成功',
-//             icon: 'success',
-//             duration: 1200
-//           });
-  
-//           setTimeout(() => {
-//             this.getCurrentReservations();
-//           }, 300);
-//         },
-  
-//         fail: (err) => {
-//           wx.hideLoading();
-  
-//           wx.showToast({
-//             title: '归还失败',
-//             icon: 'none'
-//           });
-  
-//           console.log(err);
-//         }
-//       });
-  
-//     }, 600);
-//   }
- 
-// });
 Page({
-
   data: {
     currentReservations: [],
     userInfo: {},
@@ -214,7 +29,7 @@ Page({
   getCurrentReservations() {
     const user = this.data.userInfo;
     wx.request({
-      url: 'http://10.69.174.110:8080/reservation/current',
+      url: config.baseUrl + '/reservation/current',
       method: 'GET',
       data: {
         applyId: user.id,
@@ -350,7 +165,7 @@ Page({
 
     setTimeout(() => {
       wx.request({
-        url: 'http://10.69.174.110:8080/reservation/cancel',
+        url:  config.baseUrl + '/reservation/cancel',
         method: 'POST',
         data: { id },
         success: () => {
@@ -393,7 +208,7 @@ Page({
     setTimeout(() => {
 
       wx.request({
-        url: 'http://10.69.174.110:8080/reservation/finish',
+        url: config.baseUrl + '/reservation/finish',
         method: 'POST',
         data: { id },
         success: () => {
@@ -427,52 +242,7 @@ Page({
     }, 600);
   },
 
-  // 管理员 —— 同意预约
-  // approveReservation(id) {
-  //   wx.showLoading({
-  //     title: '审批中...',
-  //     mask: true
-  //   });
-  //   setTimeout(() => {
-  //     wx.request({
-
-  //       url: 'http://192.168.31.91:8080/reservation/approve',
-
-  //       method: 'POST',
-
-  //       data: { id },
-
-  //       success: () => {
-
-  //         wx.hideLoading();
-
-  //         wx.showToast({
-  //           title: '已同意',
-  //           icon: 'success'
-  //         });
-
-  //         setTimeout(() => {
-
-  //           this.getCurrentReservations();
-
-  //         }, 300);
-  //       },
-
-  //       fail: (err) => {
-
-  //         wx.hideLoading();
-
-  //         wx.showToast({
-  //           title: '操作失败',
-  //           icon: 'none'
-  //         });
-
-  //         console.log(err);
-  //       }
-  //     });
-
-  //   }, 600);
-  // },
+ 
   // 管理员 —— 同意预约
 approveReservation(id) {
   wx.showLoading({
@@ -481,7 +251,7 @@ approveReservation(id) {
   });
   setTimeout(() => {
     wx.request({
-      url: 'http://10.69.174.110:8080/reservation/approve',
+      url: config.baseUrl + '/reservation/approve',
       method: 'POST',
       data: { id },
       success: (res) => {
@@ -529,55 +299,7 @@ approveReservation(id) {
   }, 600);
 },
 
-  // 管理员 —— 拒绝预约
-  // rejectReservation(id) {
-
-  //   wx.showLoading({
-  //     title: '处理中...',
-  //     mask: true
-  //   });
-
-  //   setTimeout(() => {
-
-  //     wx.request({
-
-  //       url: 'http://192.168.31.91:8080/reservation/reject',
-
-  //       method: 'POST',
-
-  //       data: { id },
-
-  //       success: () => {
-
-  //         wx.hideLoading();
-
-  //         wx.showToast({
-  //           title: '已拒绝',
-  //           icon: 'success'
-  //         });
-
-  //         setTimeout(() => {
-
-  //           this.getCurrentReservations();
-
-  //         }, 300);
-  //       },
-
-  //       fail: (err) => {
-
-  //         wx.hideLoading();
-
-  //         wx.showToast({
-  //           title: '操作失败',
-  //           icon: 'none'
-  //         });
-
-  //         console.log(err);
-  //       }
-  //     });
-
-  //   }, 600);
-  // }
+ 
   rejectReservation(){
 
     const {
@@ -610,7 +332,7 @@ approveReservation(id) {
   
       wx.request({
   
-        url:'http://10.69.174.110:8080/reservation/reject',
+        url:config.baseUrl + '/reservation/reject',
   
         method:'POST',
   

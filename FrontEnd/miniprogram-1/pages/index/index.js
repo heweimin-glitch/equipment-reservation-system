@@ -1,33 +1,6 @@
 // index.js
 Page({
   
-// 静态版数据源
-  // data: {
-  //   test:1,
-  //   currentIndex: 0, // 默认选中第一个
-  //   DeviceNumber: 0,
-  //   num: 1,
-  //   ListNumber: [],
-  //   Device:{
-  //     DeviceImage:'/DeviceImage/数字存储示波器.jpg',
-  //     DeviceName:'数字存储示波器',
-  //     DeviceState:'可用',
-  //     DeviceSite:'实验楼b座201',
-  //     DeviceClasses:'默认设备分类',
-  //     DeviceIntro:'设备简介区（---------测试字段---------）'
-  //   },
-  //   userid: {
-  //     name: 'xiaoli',
-  //     age: 111,
-  //   },
-  //   list: [
-  //     [1],
-  //     [2, 3],
-  //     [4, 5, 6],
-  //     [7, 8, 9, 10],
-  //   ],
-  //   DeviceKind: ['全部', '电子仪器', '光学仪器', '化学仪器', '生物仪器'],
-  // },
 onLoad(){
   const user = wx.getStorageSync('userInfo')
     this.setData({
@@ -52,7 +25,7 @@ onShow(){
 
   getEquipment() {
     wx.request({
-      url: 'http://10.69.174.110:8080/device/list',
+      url: config.baseUrl + '/device/list',
       method: 'GET',
       success: (res) => {
         console.log("设备数据：", res.data)

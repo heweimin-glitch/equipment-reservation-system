@@ -34,7 +34,7 @@ Page({
   getHistoryReservations() {
     const user = this.data.userInfo;
     wx.request({
-      url: 'http://10.69.174.110:8080/reservation/history',
+      url: config.baseUrl + '/reservation/history',
       method: 'GET',
       data: {
         applyId: user.id,

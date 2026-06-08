@@ -18,7 +18,7 @@ Page({
       return;
     }
     wx.request({
-      url: 'http://10.69.174.110:8080/user/login',
+      url: config.baseUrl + '/user/login',
       method: 'GET',
       data: {
         id: iusername,
@@ -80,7 +80,6 @@ setTimeout(() => {
     });
   },
 
-
   showError: function (message) {
     wx.showToast({
       title: message,
@@ -89,11 +88,6 @@ setTimeout(() => {
     });
   },
 
-  // onCheck(e) {
-  //   this.setData({
-  //     checked: e.detail.value
-  //   });
-  // },
   onCheck(e) {
     this.setData({
       checked:!this.data.checked
@@ -101,79 +95,4 @@ setTimeout(() => {
 
     }
     
-
-  
-
-
-
-  
-  // 状态控制
-  // updateState() {
-  //   const { username, password, confirmPassword, checked, mode } = this.data;
-
-  //   let valid = username && password && checked;
-
-  //   if (mode === 'register') {
-  //     valid = valid && confirmPassword && password === confirmPassword;
-  //   }
-
-  //   this.setData({
-  //     canSubmit: valid
-  //   });
-  // },
-
-  // 提交
-  // onSubmit() {
-  //   // 获取data中的checked值
-  //   console.log('协议同意状态:', this.data.checked);
-  //   // 获取完整的表单数据
-  //   const {
-  //     username,
-  //     password,
-  //     checked,
-  //     ipassword,
-  //     iusername
-  //   } = this.data;
-  //   // 检查表单是否完整
-  //   if (!username || !password) {
-  //     wx.showToast({
-  //       title: '请填写用户名和密码',
-  //       icon: 'none'
-  //     });
-  //     return;
-  //   }
-
-  //   // 检查协议是否同意
-  //   if (!checked) {
-  //     wx.showToast({
-  //       title: '请先同意用户协议',
-  //       icon: 'none'
-  //     });
-  //     return;
-  //   }
-
-
-  //   // if (ipassword != password || iusername != username) {
-  //   //   wx.showToast({
-  //   //     title: '用户名或密码错误',
-  //   //     icon: 'none'
-  //   //   });
-  //   //   return;
-  //   // }
-  //   // 表单验证通过，开始登录
-
-
-  //   wx.showToast({
-  //     title: '登录中...',
-  //     icon: 'loading'
-  //   });
-
-  //   // 延迟跳转，让Toast显示完整
-  //   setTimeout(() => {
-  //     wx.switchTab({
-  //       url: '/pages/index/index',
-  //     });
-  //   }, 800);
-  // }
-
 });

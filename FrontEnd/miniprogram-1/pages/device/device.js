@@ -12,7 +12,7 @@ Page({
   },
   getDeviceDetail(id) {
     wx.request({
-      url: 'http://10.69.174.110:8080/device/detail?id=' + id,
+      url: config.baseUrl + '/device/detail?id=' + id,
       success: (res) => {
         console.log("设备详情：", res.data)
         const item = res.data

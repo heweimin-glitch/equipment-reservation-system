@@ -34,7 +34,7 @@ Page({
     const userId = this.data.userInfo.id;
 
     wx.request({
-      url: 'http://10.69.174.110:8080/user/adminByPrefix',
+      url: config.baseUrl + '/user/adminByPrefix',
       method: 'GET',
       data: { prefix },
 
@@ -142,7 +142,7 @@ Page({
 
     setTimeout(() => {
       wx.request({
-        url: 'http://10.69.174.110:8080/reservation/add',
+        url: config.baseUrl + '/reservation/add',
         method: 'POST',
         data: {
           id: data.id,
