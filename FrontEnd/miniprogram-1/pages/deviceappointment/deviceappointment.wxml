@@ -1,0 +1,82 @@
+<view class="page">
+
+<!-- 设备 -->
+<view class="section">
+  <view class="cell">
+    <text class="label">预约设备</text>
+    <text class="value">{{deviceList.name}}</text>
+  </view>
+</view>
+
+<!-- 时间 -->
+<view class="section">
+  <text class="section-title">预约时间</text>
+
+  <view class="time-row">
+    <text class="time-label">开始时间</text>
+    <view class="time-group">
+
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="time-box">{{startDate}}</view>
+      </picker>
+
+      <picker mode="time" value="{{startTime}}" bindchange="onStartTimeChange">
+        <view class="time-box">{{startTime}}</view>
+      </picker>
+
+    </view>
+  </view>
+
+  <view class="time-row">
+    <text class="time-label">结束时间</text>
+    <view class="time-group">
+
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="time-box">{{endDate}}</view>
+      </picker>
+
+      <picker mode="time" value="{{endTime}}" bindchange="onEndTimeChange">
+        <view class="time-box">{{endTime}}</view>
+      </picker>
+
+    </view>
+  </view>
+</view>
+
+<!-- 审批人 -->
+<view class="section">
+  <text class="section-title">选择审批管理员</text>
+
+  <picker mode="selector"
+          range="{{adminList}}"
+          range-key="name"
+          bindchange="onAdminChange">
+
+    <view class="picker-box">
+      {{selectedAdmin.name ? selectedAdmin.name : '请选择审批人'}}
+    </view>
+
+  </picker>
+</view>
+
+<!-- 用途 -->
+<view class="section">
+  <text class="section-title">预约用途</text>
+
+  <textarea
+    class="textarea"
+    placeholder="请填写预约用途"
+    maxlength="500"
+    bindinput="onInput"
+    value="{{content}}"
+  />
+
+  <text class="count">{{content.length}}/500</text>
+</view>
+
+<!-- 提交 -->
+<button class="submit-btn" bindtap="onsubmitTap">
+  提交预约
+</button>
+
+</view>

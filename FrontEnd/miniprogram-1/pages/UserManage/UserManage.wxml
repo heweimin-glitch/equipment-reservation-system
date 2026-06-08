@@ -1,0 +1,50 @@
+<!-- pages/addUser/addUser.wxml -->
+
+<view class="page">
+
+<view class="title">新增用户</view>
+
+<!-- 表单区域 -->
+<view class="form">
+
+  <!-- 权限 -->
+  <view class="item">
+    <view class="label">用户权限</view>
+    <picker mode="selector" range="{{roleList}}" bindchange="onRoleChange">
+      <view class="input-box">
+        {{selectedRole}}
+      </view>
+    </picker>
+  </view>
+
+<!-- 用户ID -->
+<!-- 用户ID -->
+<view class="item">
+  <view class="label">用户ID</view>
+  <input class="input"
+    placeholder="{{selectedRole === '管理员' ? '请输入后6位ID' : '请输入11位ID'}}"
+    maxlength="{{selectedRole === '管理员' ? 6 : 11}}"
+    bindinput="onUserIdInput"
+    value="{{userIdInput}}"
+  />
+</view>
+
+  <!-- 姓名 -->
+  <view class="item">
+    <view class="label">姓名</view>
+    <input class="input" placeholder="请输入姓名" bindinput="onNameInput" value="{{nameShow}}" />
+  </view>
+
+  <!-- 密码 -->
+  <view class="item">
+    <view class="label">密码</view>
+    <input class="input"  placeholder="请输入密码" bindinput="onPasswordInput" value="{{passwordShow}}"/>
+  </view>
+</view>
+
+<!-- 提交按钮 -->
+<button class="btn" bindtap="submitUser">
+  创建用户
+</button>
+
+</view>

@@ -1,0 +1,158 @@
+/* pages/CurrentReservation/CurrentReservation.wxss */
+.container {
+  padding: 10rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+.card-list {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-top: 30rpx;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.device-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-tag {
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+/* 待确认状态 */
+.pending {
+  background-color: #FFF3CD;
+  color: #D48806;
+}
+/* 拒绝状态 */
+.reject{
+  background-color: #FFF1F0;
+  color: #F5222D;
+}
+/* 使用中状态 */
+.using {
+  background-color: #E6F4FF;
+  color: #1677FF;
+}
+/* 取消状态 */
+.cancel{
+  background-color: #F5F5F5;
+  color: #8C8C8C;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  margin-bottom: 40rpx;
+  width: 90%;
+  margin-top: 15rpx;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.info-item icon {
+  margin-right: 8rpx;
+}
+
+.action-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 55rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-bottom:30rpx ;
+}
+
+/* 取消按钮 */
+.cancel-btn {
+  background-color: #DC2728;
+  color: #fff;
+}
+
+/* 归还按钮 */
+.return-btn {
+  background-color: #51ad22;
+  color: #fff;
+ 
+}
+.admin-btn{
+  display: flex;
+ 
+}
+.approve-btn{
+  background-color: #51ad22;
+  color: #f8f9fa;
+ 
+}
+.reject-btn{
+  background-color: #DC2728;
+  color: #f8f9fa;
+}
+
+.reject-mask{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.reject-modal{
+  width: 620rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 35rpx;
+  box-sizing: border-box;
+}
+
+.reject-title{
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: bolder;
+  color: #666;
+}
+
+.reject-input{
+  width:100%;
+  min-height:180rpx;
+  border:1rpx solid #ddd;
+  border-radius:16rpx;
+  padding:20rpx;
+  box-sizing:border-box;
+  font-size:28rpx;
+  background:#fafafa;
+}

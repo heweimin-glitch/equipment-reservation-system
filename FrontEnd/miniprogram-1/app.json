@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/my/my",
+    "pages/device/device",
+    "pages/deviceappointment/deviceappointment",
+    "pages/CurrentReservation/CurrentReservation",
+    "pages/HistoricalReservation/HistoricalReservation",
+    "pages/changepassword/changepassword",
+    "pages/DeviceManage/DeviceManage",
+    "pages/UserManage/UserManage"
+  ],
+  "window": {
+    "navigationBarTitleText": "预约小序",
+    "navigationBarBackgroundColor": "#1296db",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#bfbfbf",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "selectedColor": "#1296db",
+    "color": "#2c2c2c",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "position": "bottom",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "IconStorage/shouyeweixuan.png",
+        "selectedIconPath": "IconStorage/shouyeyixuan.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/my/my",
+        "iconPath": "IconStorage/wodeweixuan.png",
+        "selectedIconPath": "IconStorage/wodeyixuan.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

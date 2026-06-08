@@ -1,0 +1,203 @@
+/* pages/device/device.wxss */
+/* 页面基础样式 */
+page {
+  background-color: #F7F9FA;
+}
+
+/* 显微镜设备卡片容器 */
+.Device-card {
+  /* background: white; */
+  border-radius: 25rpx;
+  margin-left: 25rpx;
+  width: 700rpx;
+ 
+  overflow: hidden;
+}
+
+
+
+/* 顶部图片区域 */
+.DeviceImage{
+  width: 100%;
+  height: 400rpx;
+  display: block;
+  object-fit: cover;
+  /* border-bottom: 1rpx solid #f0f0f0; */
+}
+
+.card-one{
+  width: 700rpx;
+  height: 400rpx;
+  background-color: #ffffFF;
+  margin-top: 20rpx;
+  border-radius: 25rpx;
+}
+
+.header-section {
+  padding-top: 25rpx;
+  padding-left: 25rpx;
+  padding-right: 25rpx;
+  display: flex; 
+  justify-content: space-between;
+   align-items: center;
+  
+}
+/* 设备描述 */
+.description {
+  width: 700rpx;
+  height: 100rpx;
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 10rpx;
+  margin-left: 25rpx;
+  /* background-color: red; */
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: 700;
+  width: 400rpx;
+  height: ;
+  color: #1a1a1a;
+  line-height: 1.4;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+/* 状态标签 */
+.status {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 80rpx;
+  text-align: center;
+  border: 2rpx solid transparent;
+}
+
+
+
+
+
+/* 位置信息 */
+.location {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx 20rpx;
+  font-size: 28rpx;
+  color: black;
+}
+
+.location icon {
+  margin-right: 10rpx;
+}
+
+/* 分类标签 */
+.category {
+  display: inline-block;
+  margin: 0 30rpx 20rpx;
+  padding: 6rpx 16rpx;
+  background-color: #f2f2f7;
+  color: #8e8e93;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+/* 设备规格 */
+.specs {
+  width: 700rpx;
+  height: 200rpx;
+  padding: 20rpx 30rpx;
+  background-color: #ffffff;
+  margin-top: 30rpx;
+  border-radius: 25rpx;
+}
+
+.specs-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8rpx;
+}
+
+.specs-content {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.4;
+  display: block;
+}
+
+/* 使用说明 */
+.usage-guide {
+  padding: 0 30rpx 30rpx;
+  background-color: white;
+  margin-top:25rpx ;
+  border-radius: 25rpx;
+}
+
+.guide-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+}
+
+
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  background: linear-gradient(135deg, #007AFF, #5856D6);
+  color: white;
+  border-radius: 50%;
+  font-size: 24rpx;
+  font-weight: 600;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+}
+
+.step-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+  flex: 1;
+  padding-top: 6rpx;
+}
+
+
+.reserve-btn {
+  background: linear-gradient(135deg, #007AFF, #5856D6);
+  color: white;
+  border: none;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  padding: 24rpx 0;
+  margin: 0 30rpx 30rpx;
+  margin-top: 30rpx;
+}
+
+
+
+
+
+
+
+

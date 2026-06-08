@@ -1,0 +1,75 @@
+/* pages/HistoricalReservation/HistoricalReservation.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.card-list {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.device-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-tag {
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+/* 拒绝状态 */
+.reject{
+  background-color: #FFF1F0;
+  color: #F5222D;
+}
+/* 使用中状态 */
+.using {
+  background-color: #E6F4FF;
+  color: #1677FF;
+}
+/* 取消状态 */
+.cancel{
+  background-color: #F5F5F5;
+  color: #8C8C8C;
+}
+/* 完成状态 */
+.finish{
+  background-color: #F6FFED;
+  color: #52C41A;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #666;
+}
+.info-itemon {
+   margin-right: 8rpx;
+}

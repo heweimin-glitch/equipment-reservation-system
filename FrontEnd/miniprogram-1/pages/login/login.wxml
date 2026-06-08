@@ -1,0 +1,39 @@
+<image src="/IconStorage/shiyan.png" class="topimage" />
+
+<view class="title-container">
+  <view class="bigtitle">实验设备预约</view>
+  <view class="subtitle">便携高效的设备管理平台</view>
+</view>
+
+<view class="card">
+  <image src="{{eyeImage}}" class="coverimage" />
+
+
+    <view class="label01">用户名</view>
+    <input
+      class="input"
+      placeholder="请输入用户名"
+      bindinput="onUsernameInput"
+    />
+
+    <view class="label02">密码</view>
+    <input
+      class="input"
+      password
+      placeholder="请输入密码"
+      bindinput="onPasswordInput"
+      bindfocus="onPasswordFocus"
+      bindblur="onPasswordBlur"
+    />
+
+    <view class="agreement">
+      <checkbox
+      checked="{{checked}}"
+      bindtap="onCheck"
+      />
+      <text>我已阅读并同意《用户协议》和《隐私政策》</text>
+    </view>
+</view>
+<button class="btn" bindtap="onSubmit">
+      登录
+    </button>

@@ -1,0 +1,103 @@
+<!--index.wxml-->
+
+<view class="banner">
+  <view class="banner-mainhead">
+    <text>实验设备预约</text>
+  </view>
+  <view class="banner-subhead">
+    <text>便携高效的设备管理平台</text>
+  </view>
+</view>
+
+
+
+<!-- 设备分类 -->
+<scroll-view scroll-x="true" class="categoryBar">
+  <button
+  class="{{currentType=='' ? 'selected' : ''}}"
+  bindtap="showAll">全部设备</button>
+
+<button
+  class="{{currentType=='01' ? 'selected' : ''}}"
+  data-type="01"
+  bindtap="filterCategory">化学工程</button>
+
+<button
+  class="{{currentType=='02' ? 'selected' : ''}}"
+  data-type="02"
+  bindtap="filterCategory">医学实验</button>
+
+<button
+  class="{{currentType=='03' ? 'selected' : ''}}"
+  data-type="03"
+  bindtap="filterCategory">机械工程</button>
+
+<button
+  class="{{currentType=='04' ? 'selected' : ''}}"
+  data-type="04"
+  bindtap="filterCategory">材料科学</button>
+
+<button
+  class="{{currentType=='05' ? 'selected' : ''}}"
+  data-type="05"
+  bindtap="filterCategory">物理实验</button>
+
+<button
+  class="{{currentType=='06' ? 'selected' : ''}}"
+  data-type="06"
+  bindtap="filterCategory">环境科学</button>
+
+<button
+  class="{{currentType=='07' ? 'selected' : ''}}"
+  data-type="07"
+  bindtap="filterCategory">生物科学</button>
+
+<button
+  class="{{currentType=='08' ? 'selected' : ''}}"
+  data-type="08"
+  bindtap="filterCategory">电子信息</button>
+</scroll-view>
+<!-- 设备分类 -->
+
+
+<!-- 设备列表 -->
+<view class="Equipment-List-Area">
+  <text class="title">设备列表（{{count}}）</text>
+  <scroll-view scroll-y="true" class="scroll-y">
+
+    <view wx:for="{{equipmentList}}" wx:key="*this"  wx:for-index="i" class="DeviceList" catch:tap="DeviceLink" data-item="{{item}}" >
+
+      <!-- 设备图片 -->
+      <view class="ImageCard">
+        <image src="{{item.ImageUrl}}" mode="" />
+      </view>
+
+      <view class="DeviceInformation">
+
+        <view class="Dione">
+          <view class="DeviceName">{{item.name}}</view>
+          <view class="{{item.number > 0 ? 'status available' : 'status unavailable'}}" >
+          <text>{{item.number > 0 ? '可用' : '不可用'}}</text>
+          </view>
+        </view>
+
+        <view class="Ditwo">
+          <text>{{item.introduction}}</text>
+        </view>
+
+        <view class="Dithree">
+          <image src="/IconStorage/didian.png" mode="" />
+          <view class="DeviceSite"><text>{{item.address}}</text></view>
+          <view class="category">
+            <text>{{item.category}}</text>
+          </view>
+
+        </view>
+
+      </view>
+
+    </view>
+
+  </scroll-view>
+</view>
+<!-- 设备列表 -->

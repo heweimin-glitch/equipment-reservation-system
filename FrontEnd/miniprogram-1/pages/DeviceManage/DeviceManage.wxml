@@ -1,0 +1,122 @@
+<!-- pages/DeviceManage/DeviceManage.wxml -->
+<view class="container">
+
+<!-- 顶部切换 -->
+<view class="tab-bar">
+  <view class="tab {{tab=='list'?'active':''}}" data-tab="list" bindtap="switchTab">
+    设备列表
+  </view>
+
+  <view class="tab {{tab=='add'?'active':''}}" data-tab="add" bindtap="switchTab">
+    新增设备
+  </view>
+</view>
+
+<!-- ================= 设备列表 ================= -->
+<view wx:if="{{tab=='list'}}">
+
+  <block wx:for="{{deviceList}}" wx:key="id">
+
+    <view class="card">
+
+      <view class="card-title">
+        {{item.name}}（ID: {{item.id}}）
+      </view>
+
+      <view class="card-info">
+        <text>地址：{{item.address}}--------</text>
+        <text>库存：{{item.number}}</text>
+      </view>
+
+      <view class="card-info">
+        <text>简介：{{item.introduction}}</text>
+      </view>
+
+      <view class="card-info">
+        <text>规格：{{item.spec}}</text>
+      </view>
+
+      <!-- 操作区 -->
+      <view class="action-row">
+
+        <input class="num-input" type="number"
+          placeholder="数量"
+          data-id="{{item.id}}"
+          bindinput="onNumInput"
+        />
+
+        <view class="btn-group">
+
+          <button class="btn-add"
+            data-id="{{item.id}}"
+            data-name="{{item.name}}"
+            bindtap="addNumber"
+          >
+            入库
+          </button>
+
+          <button class="btn-del"
+            data-id="{{item.id}}"
+            data-name="{{item.name}}"
+            data-current="{{item.number}}"
+            bindtap="reduceNumber"
+          >
+            出库
+          </button>
+
+        </view>
+
+      </view>
+
+    </view>
+
+  </block>
+
+</view>
+
+<!-- ================= 新增设备 ================= -->
+<view wx:if="{{tab=='add'}}" class="form-card">
+
+<view class="form-title">新增设备信息</view>
+
+<view class="form-group">
+  <text class="label">设备名称</text>
+  <input class="input" placeholder="请输入设备名称" bindinput="setField" data-field="name"/>
+</view>
+
+<view class="form-group">
+  <text class="label">设备地址</text>
+  <input class="input" placeholder="请输入设备地址" bindinput="setField" data-field="address"/>
+</view>
+
+<view class="form-group-row">
+
+  <view class="form-item">
+    <text class="label">设备数量</text>
+    <input class="input" type="number" placeholder="数量" bindinput="setField" data-field="number"/>
+  </view>
+
+  <view class="form-item">
+    <text class="label">规格</text>
+    <input class="input" placeholder="规格" bindinput="setField" data-field="spec"/>
+  </view>
+
+</view>
+
+<view class="form-group">
+  <text class="label">图片URL</text>
+  <input class="input" placeholder="请输入图片链接" bindinput="setField" maxlength="-1" data-field="ImageUrl"/>
+</view>
+
+<view class="form-group">
+  <text class="label">设备简介</text>
+  <input class="input" placeholder="请输入设备简介" bindinput="setField" data-field="introduction"/>
+</view>
+
+<button class="submit-btn" bindtap="addDevice">
+  + 添加设备
+</button>
+
+</view>
+
+</view>

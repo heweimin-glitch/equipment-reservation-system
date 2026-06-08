@@ -1,0 +1,113 @@
+<!--pages/CurrentReservation/CurrentReservation.wxml-->
+
+<view class="container">
+
+  <!-- 预约卡片列表 -->
+  <view class="card-list">
+
+    <block wx:for="{{currentReservations}}" wx:key="id">
+
+      <view class="card">
+
+        <!-- 顶部 -->
+        <view class="card-header">
+
+          <text class="device-name">
+            {{item.deviceName}}
+          </text>
+
+          <!-- 状态标签 -->
+          <view class="status-tag {{item.statusClass}}">
+  {{item.statusText}}
+</view>
+
+        </view>
+
+        <!-- 信息 -->
+        <view class="card-info">
+
+          <view class="info-item">
+            <text>⏰ 开始时间：{{item.start_time}}</text>
+          </view>
+
+          <view class="info-item" wx:if="{{item.end_time}}">
+            <text>⏰ 结束时间：{{item.end_time}}</text>
+          </view>
+
+          <view class="info-item">
+            <text>📍 设备地点：{{item.address}}</text>
+          </view>
+
+          <view class="info-item">
+            <text>📄 申请理由：{{item.purpose}}</text>
+          </view>
+
+          <view class="info-item">
+            <text>📄 拒绝理由：{{item.reject_reason}}</text>
+          </view>
+
+          <view class="info-item">
+           <text>👤 申请人：{{item.applyName}} 🧑‍💼 审批人：{{item.adminName}}</text>
+          </view>
+          
+        </view>
+
+        <!-- ================= 普通用户按钮 ================= -->
+
+        <button wx:if="{{!userInfo.is_admin}}" class="action-btn {{item.status == 0 || item.status == 1 ? 'cancel-btn' : 'return-btn'}}" bindtap="handleAction" data-id="{{item.id}}" data-status="{{item.status}}" data-index="{{index}}">
+
+          {{item.status == 3 ? '归还设备' : '取消预约'}}
+
+        </button>
+
+        <!-- ================= 管理员按钮 ================= -->
+        <view class="admin-btns" wx:if="{{userInfo.is_admin && item.status == 0}}">
+
+          <!-- 同意预约 -->
+          <view class="admin-btn">
+            <button class="approve-btn" bindtap="handleAction" data-id="{{item.id}}" data-index="{{index}}" data-action="approve">
+              同意预约
+            </button>
+
+            <!-- 拒绝预约 -->
+            <button class="reject-btn" bindtap="handleAction" data-id="{{item.id}}" data-index="{{index}}" data-action="reject">
+              拒绝预约
+            </button>
+          </view>
+
+
+
+        </view>
+
+      </view>
+
+    </block>
+
+    <!-- 拒绝理由弹窗 -->
+    <view class="reject-mask" wx:if="{{showRejectModal}}">
+
+      <view class="reject-modal">
+
+        <view class="reject-title">
+          拒绝理由
+        </view>
+
+        <textarea class="reject-input" placeholder="请输入拒绝原因" bindinput="onRejectReasonInput" />
+
+
+        <view class="admin-btn">
+          <button class="approve-btn" bindtap="closeRejectModal">
+            取消
+          </button>
+          <button class="cancel-btn" bindtap="rejectReservation">
+            确认拒绝
+          </button>
+        </view>
+
+
+      </view>
+    </view>
+
+  </view>
+
+</view>

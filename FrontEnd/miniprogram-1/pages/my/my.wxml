@@ -1,0 +1,71 @@
+<!--pages/my/my.wxml-->
+<view class="banner">
+  <image src="" mode="" class="AvatarArea" />
+<!-- https://bishe-1415871826.cos.ap-shanghai.myqcloud.com/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F.png -->
+  <view class="PersonalInformation">
+    <text class="PI-name">{{name}}</text>
+    <view class="PI-class" wx:if="{{is_admin==1}}">管理员</view>
+    <view class="PI-class" wx:else>普通用户</view>
+  </view>
+</view>
+
+<view class="label">
+  <image src="/IconStorage/yuyue.png" mode="" />
+
+  <view class="labelcenter" catch:tap="CurrentReservation">
+    <view class="labeltext"><text>当前预约</text></view>
+    <view class="textabout"><text>正在申请或申请通过记录</text></view>
+  </view>
+  <image class="funhui" src="/IconStorage/fanhui2.png" mode=""/>
+</view>
+
+
+<view class="label">
+  <image class="yuyue" src="/IconStorage/yuyue-2.png" mode="" />
+
+  <view class="labelcenter" catch:tap="HistoricalReservation">
+    <view class="labeltext"><text>历史预约</text></view>
+  <view class="textabout"><text>历史申请或申请失败记录</text></view>
+  </view>
+  <image class="funhui" src="/IconStorage/fanhui2.png" mode=""/>
+</view>
+
+<!-- 设备管理 -->
+<view class="label">
+<image class="yuyue" src="/IconStorage/device.png" mode="" />
+<view class="labelcenter" catch:tap="goDeviceManage">
+  <view class="labeltext">
+    <text>设备管理</text>
+  </view>
+  <view class="textabout">
+    <text>设备库存数量或新增设备</text>
+  </view>
+</view>
+<image class="funhui" src="/IconStorage/fanhui2.png" mode=""/>
+</view>
+
+<!-- 设备管理 -->
+<view class="label">
+<image class="yuyue" src="/IconStorage/yonghu.png" mode="" />
+<view class="labelcenter" catch:tap="goUserManage">
+  <view class="labeltext">
+    <text>用户管理</text>
+  </view>
+  <view class="textabout">
+    <text>添加用户设置其访问权限</text>
+  </view>
+</view>
+<image class="funhui" src="/IconStorage/fanhui2.png" mode=""/>
+</view>
+
+
+<view class="btn-group">
+<button class="btn" bindtap="goChangePassword">
+  修改密码
+</button>
+
+<button class="btn-logout" bindtap="onLogout">
+  退出登录
+</button>
+</view>
+

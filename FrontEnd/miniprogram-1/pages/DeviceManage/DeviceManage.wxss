@@ -1,0 +1,141 @@
+.container{
+  padding:20rpx;
+}
+
+/* tab */
+.tab-bar{
+  display:flex;
+  margin-bottom:20rpx;
+}
+
+.tab{
+  flex:1;
+  text-align:center;
+  padding:20rpx;
+  width: 300rpx;
+  background:#eee;
+  border-radius: 30rpx;
+}
+
+.active{
+  background:#4a90e2;
+  color:#fff;
+}
+
+/* card */
+.card{
+  background:#fff;
+  padding:20rpx;
+  margin-bottom:20rpx;
+  border-radius:12rpx;
+  box-shadow:0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+
+.card-title{
+  font-weight:bold;
+  margin-bottom:10rpx;
+}
+
+.card-info{
+  font-size:26rpx;
+  color:#4a90e2;
+  margin-bottom:6rpx;
+}
+
+/* 操作 */
+.action-row{
+  margin-top:15rpx;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.num-input{
+  border:1px solid black;
+  padding:10rpx;
+  /* width:200rpx; */
+  border-radius:10rpx;
+}
+
+
+.btn-group{
+  display: flex;
+}
+.btn-group button{
+  /* width: 150rpx; */
+  margin-left:10rpx;
+  /* border-radius: 30rpx; */
+  width: 150rpx;
+}
+.btn-add{
+  background: linear-gradient(135deg, #3a7afe, #5a9cff);
+  color: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(58, 122, 254, 0.3);
+}
+.btn-del{
+  background: linear-gradient(135deg, #ff8f1f, #ffb347);
+  color: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(255, 143, 31, 0.3);
+}
+
+/* 新增 */
+.form-card {
+  margin: 20rpx;
+  padding: 30rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0,0,0,0.08);
+}
+
+.form-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 25rpx;
+}
+
+.form-group-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.form-item {
+  flex: 1;
+}
+
+.label {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: 18rpx;
+  border: 1rpx solid #eee;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  background: #fafafa;
+}
+
+.input:focus {
+  border-color: #4a90e2;
+  background: #fff;
+}
+
+.submit-btn {
+  margin-top: 30rpx;
+  background: linear-gradient(135deg,#4a90e2,#357ae8);
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 50rpx;
+  padding: 20rpx;
+  box-shadow: 0 8rpx 20rpx rgba(74,144,226,0.3);
+}
