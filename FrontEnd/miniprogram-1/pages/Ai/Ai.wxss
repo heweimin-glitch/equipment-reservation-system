@@ -1,0 +1,113 @@
+/* 容器 */
+page{
+  background-color: #f0f0f0;
+}
+.container{
+  display:flex;
+  flex-direction:column;
+  /* background:#f5f5f5; */
+  padding-top:20rpx;
+  padding-left: 10rpx;
+  box-sizing:border-box;
+  margin-top: 0;
+  /* height: 1350rpx; */
+}
+
+/* 聊天区域 */
+.chat-area{
+  flex:1;
+  padding:20rpx;
+ 
+}
+
+/* AI消息行 */
+.ai-row{
+  display:flex;
+  align-items:flex-start;
+  margin-top:0;
+  margin-bottom: 10rpx;
+  
+}
+
+/* AI头像 */
+.avatar{
+  width:80rpx;
+  height:80rpx;
+  border-radius:50%;
+  margin-right:15rpx;
+  flex-shrink:0;
+}
+
+/* AI消息气泡 */
+.ai-bubble{
+  background:white;
+  border-radius:20rpx;
+  padding: 20rpx;
+  box-shadow:0 2rpx 10rpx rgba(0,0,0,.1);
+  /* width: 400rpx; */
+  max-width: 400rpx;
+  text-align: left;      
+  display: flex;         
+  flex-direction: column;
+  margin-bottom: 10rpx;
+}
+
+/* 用户消息行 */
+.user-row{
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+}
+
+/* 用户消息气泡 */
+.user-bubble{
+  background:#95ec69;
+  color:#333;
+  padding: 20rpx;
+  border-radius:20rpx;
+  box-shadow:0 2rpx 10rpx rgba(0,0,0,.1);
+  max-width:400rpx;
+  word-break:break-all;
+  text-align:left;
+  margin-bottom: 10rpx;
+}
+
+.input-area{
+  position:fixed;
+  bottom:40rpx;
+  left:20rpx;
+  right:20rpx;
+
+  display:flex;
+  align-items:center;
+
+  /* background:#f5f5f5; */
+  padding:10rpx 0;
+  z-index:999;
+}
+
+/* 输入框 */
+.input-box{
+  flex:1;
+  height:72rpx;
+  background:#ffffff;
+  border-radius:36rpx;
+  padding:0 20rpx;
+  font-size:28rpx;
+  box-sizing:border-box;
+}
+
+/* 发送按钮 */
+.send-btn{
+  width:120rpx;          
+  height:60rpx;
+  margin-left:20rpx;
+  background:#07c160;
+  border-radius:30rpx;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:28rpx;
+  user-select:none; /* 防止文字被选中 */
+}

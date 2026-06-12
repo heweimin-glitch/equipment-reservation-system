@@ -97,7 +97,18 @@
       </view>
 
     </view>
-
   </scroll-view>
 </view>
 <!-- 设备列表 -->
+
+<!-- ai小助手 -->
+<view class="ai-container" bindtap="goAI">
+  <text class="ai-text">预约小序</text>
+  <image
+    class="ai-float-btn"
+    src="/AiImage/睁眼图片（蓝）.png"
+    mode="aspectFit">
+  </image>
+</view>
+
+<!-- ai小助手 -->

@@ -1,3 +1,9 @@
+/**
+ * 设备预约表单页
+ * 选择时间、填写用途、选择审批人 → 提交预约申请
+ */
+import config from '../../utils/config.js'
+import request from '../../utils/request.js'
 Page({
 
   data: {
@@ -14,26 +20,20 @@ Page({
 
   onLoad() {
     this.initTime();
-
     const deviceList = wx.getStorageSync('deviceList');
     const user = wx.getStorageSync('userInfo');
-
-    this.setData({
-      deviceList,
-      userInfo: user
-    });
-
+    this.setData({ deviceList, userInfo: user });
     this.getAdminList();
   },
 
-  // ======================
-  // 获取管理员
-  // ======================
+  /**
+   * 获取该设备所在学科下的管理员列表（排除当前用户自己）
+   */
   getAdminList() {
     const prefix = this.data.deviceList.id.substring(0, 2);
     const userId = this.data.userInfo.id;
 
-    wx.request({
+    request({
       url: config.baseUrl + '/user/adminByPrefix',
       method: 'GET',
       data: { prefix },
@@ -46,7 +46,7 @@ Page({
   },
 
 
-  // 选择审批人
+  /** 选择审批人 */
   onAdminChange(e) {
     const index = e.detail.value;
     this.setData({
@@ -54,30 +54,32 @@ Page({
     });
   },
 
+  /** 用途输入绑定 */
   onInput(e) {
-    this.setData({
-      content: e.detail.value
-    });
+    this.setData({ content: e.detail.value });
   },
 
-  // 时间变化
+  /** 开始日期选择 */
   onStartDateChange(e) {
     this.setData({ startDate: e.detail.value });
   },
 
+  /** 开始时间选择 */
   onStartTimeChange(e) {
     this.setData({ startTime: e.detail.value });
   },
 
+  /** 结束日期选择 */
   onEndDateChange(e) {
     this.setData({ endDate: e.detail.value });
   },
 
+  /** 结束时间选择 */
   onEndTimeChange(e) {
     this.setData({ endTime: e.detail.value });
   },
 
-  // 提交预约消炎
+  /** 提交预约：校验必填项 → 生成ID → 调用API */
   onsubmitTap() {
 
     const {
@@ -101,18 +103,16 @@ Page({
       return this.showError('请输入预约用途');
     }
 
-    // 拼接时间 带秒
+    // 拼接完整的日期时间字符串
     const startStr = `${startDate}T${startTime}:00`;
     const endStr = `${endDate}T${endTime}:00`;
 
-    // const start = new Date(startStr.replace(/-/g, '/'));
-    // const end = new Date(endStr.replace(/-/g, '/'));
     const start = new Date(startDate + ' ' + startTime).getTime();
     const end = new Date(endDate + ' ' + endTime).getTime();
 
-    // 时间校验
-    if (start > end) {
-      return this.showError('结束时间要在开始时间之前');
+    // 时间校验：开始时间必须早于结束时间
+    if (start >= end) {
+      return this.showError('结束时间必须晚于开始时间');
     }
 
     // 生成8位ID
@@ -130,9 +130,10 @@ Page({
     });
   },
 
-  // ======================
-  // 提交请求
-  // ======================
+  /**
+   * 调用后端 API 提交预约
+   * @param data 预约数据对象
+   */
   submit(data) {
 
     wx.showLoading({
@@ -141,7 +142,7 @@ Page({
     });
 
     setTimeout(() => {
-      wx.request({
+      request({
         url: config.baseUrl + '/reservation/add',
         method: 'POST',
         data: {
@@ -152,8 +153,7 @@ Page({
           start_time: data.startStr,
           end_time: data.endStr,
           purpose: data.content,
-          status: 0,
-          
+          status: 0
         },
 
         success: () => {
@@ -180,13 +180,12 @@ Page({
     }, 500);
   },
 
-  // 生成8位ID
+  /** 生成8位随机预约ID */
   generateId() {
     return Math.floor(10000000 + Math.random() * 90000000).toString();
   },
 
-
-  // 初始化时间
+  /** 初始化默认开始/结束时间为当前时间 */
   initTime() {
 
     const now = new Date();
@@ -207,7 +206,7 @@ Page({
   },
 
 
-  // 错误提示
+  /** 错误提示 Toast */
   showError(msg) {
     wx.showToast({
       title: msg,

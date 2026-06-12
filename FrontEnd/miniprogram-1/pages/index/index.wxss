@@ -199,3 +199,41 @@ height: 100%;
   background-color: #336de0; /* 选中时的背景色 */
   color: #fff;
 }
+
+.ai-container{
+  position: fixed;
+
+  right: 30rpx;
+  bottom: 120rpx;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 999;
+  animation: float 2s ease-in-out infinite;
+}
+
+.ai-float-btn{
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.ai-text{
+    font-size: 24rpx;
+    font-weight: 600;
+    color: #07c160;
+}
+
+@keyframes float{
+  0%{
+      transform: translateY(0);
+  }
+
+  50%{
+      transform: translateY(-10rpx);
+  }
+
+  100%{
+      transform: translateY(0);
+  }
+}

@@ -15,6 +15,11 @@
 <!-- ================= 设备列表 ================= -->
 <view wx:if="{{tab=='list'}}">
 
+  <!-- 修复9：空列表提示 -->
+  <view wx:if="{{deviceList.length === 0}}" class="empty-hint">
+    暂无管辖设备
+  </view>
+
   <block wx:for="{{deviceList}}" wx:key="id">
 
     <view class="card">
@@ -24,7 +29,7 @@
       </view>
 
       <view class="card-info">
-        <text>地址：{{item.address}}--------</text>
+        <text>地址：{{item.address}}</text>
         <text>库存：{{item.number}}</text>
       </view>
 

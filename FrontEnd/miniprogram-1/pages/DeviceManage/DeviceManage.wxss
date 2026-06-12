@@ -42,6 +42,14 @@
   margin-bottom:6rpx;
 }
 
+/* 空列表提示 */
+.empty-hint{
+  text-align:center;
+  padding:80rpx 0;
+  color:#999;
+  font-size:28rpx;
+}
+
 /* 操作 */
 .action-row{
   margin-top:15rpx;

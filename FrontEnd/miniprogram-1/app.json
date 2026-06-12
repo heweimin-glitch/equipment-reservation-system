@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/Ai/Ai",
     "pages/index/index",
     "pages/my/my",
     "pages/device/device",
@@ -10,6 +11,7 @@
     "pages/changepassword/changepassword",
     "pages/DeviceManage/DeviceManage",
     "pages/UserManage/UserManage"
+    
   ],
   "window": {
     "navigationBarTitleText": "预约小序",

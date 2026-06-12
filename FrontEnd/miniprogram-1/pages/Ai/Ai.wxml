@@ -1,0 +1,53 @@
+<view class="container">
+
+<!-- 聊天区域 -->
+<scroll-view
+    class="chat-area"
+    scroll-y="true"
+    scroll-with-animation="true"
+    scroll-top="{{scrollTop}}">
+
+    <block wx:for="{{messages}}" wx:key="index">
+
+        <!-- AI消息 -->
+        <view wx:if="{{item.role=='assistant'}}" class="ai-row">
+            <image
+                class="avatar"
+                src="/AiImage/睁眼图片（蓝）.png">
+            </image>
+            <view class="ai-bubble">
+                {{item.content}}
+            </view>
+        </view>
+
+        <!-- 用户消息 -->
+        <view wx:if="{{item.role=='user'}}" class="user-row">
+            <view class="user-bubble">
+                {{item.content}}
+            </view>
+        </view>
+
+    </block>
+
+</scroll-view>
+
+<!-- 底部输入栏 -->
+<view class="input-area">
+    <input
+        class="input-box"
+        value="{{inputText}}"
+        placeholder="请输入问题..."
+        bindinput="onInput"/>
+   <!-- 外层view固定宽度 -->
+
+    <!-- 模拟按钮 -->
+
+      <view class="send-btn" bindtap="sendMessage">
+    发送
+    </view>
+
+
+
+</view>
+
+</view>

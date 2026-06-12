@@ -1,12 +1,19 @@
+/**
+ * 当前预约页
+ * 管理员：待审批列表 → 同意/拒绝
+ * 普通用户：自己的进行中预约 → 取消/归还
+ */
+import config from '../../utils/config.js'
+import request from '../../utils/request.js'
 
 Page({
   data: {
     currentReservations: [],
     userInfo: {},
     currentAction: {},
-    showRejectModal:false,
-    rejectReason:'',
-    rejectId:null,
+    showRejectModal: false,
+    rejectReason: '',
+    rejectId: null,
     statusMap: {
       0: '待审批',
       1: '未通过',
@@ -16,370 +23,206 @@ Page({
     }
   },
 
-  // 页面加载
-  onLoad(){
+  /** 页面加载：读取用户信息 → 请求当前预约列表 */
+  onLoad() {
     const user = wx.getStorageSync('userInfo');
-    this.setData({
-      userInfo: user
-    });
+    this.setData({ userInfo: user });
     this.getCurrentReservations();
   },
 
-  // 获取当前预约
+  /** 获取当前预约列表并附加状态文本/样式类 */
   getCurrentReservations() {
     const user = this.data.userInfo;
-    wx.request({
+    request({
       url: config.baseUrl + '/reservation/current',
       method: 'GET',
-      data: {
-        applyId: user.id,
-        isAdmin: user.is_admin
-      },
+      data: { applyId: user.id, isAdmin: user.is_admin },
       success: (res) => {
         const list = res.data.map(item => {
           let statusClass = '';
           switch (item.status) {
-            case 0:
-              statusClass = 'pending';
-              break;
-            case 1:
-              statusClass = 'reject';
-              break;
-            case 2:
-              statusClass = 'cancel';
-              break;
-            case 3:
-              statusClass = 'using';
-              break;
-            case 4:
-              statusClass = 'finish';
-              break;
+            case 0: statusClass = 'pending'; break;
+            case 1: statusClass = 'reject';  break;
+            case 2: statusClass = 'cancel';  break;
+            case 3: statusClass = 'using';   break;
+            case 4: statusClass = 'finish';  break;
           }
           return {
-            ...item,  
+            ...item,
             statusText: this.data.statusMap[item.status],
-            statusClass:statusClass
-          }
+            statusClass: statusClass
+          };
         });
-
-        this.setData({
-          currentReservations: list
-        });
-        console.log(res.data)
+        this.setData({ currentReservations: list });
+        console.log(res.data);
       }
     });
   },
 
-  // 操作按钮
+  /** 操作按钮分发：管理员（同意/拒绝） / 普通用户（取消/归还） */
   handleAction(e) {
     const { id, status, action, index } = e.currentTarget.dataset;
     const device = this.data.currentReservations[index];
+
     // 管理员 —— 同意预约
-    if (action == "approve") {
+    if (action == 'approve') {
       wx.showModal({
         title: '确认审批',
         content: `确认同意【${device.deviceName}】预约吗？`,
         success: (res) => {
-          if (res.confirm) {
-            this.approveReservation(id);
-          }
+          if (res.confirm) this.approveReservation(id);
         }
       });
       return;
     }
 
-    if (action == "reject") {
-      this.setData({    
-        showRejectModal:true,
-        rejectId:id,
-        rejectReason:''
-      });
+    // 管理员 —— 拒绝预约
+    if (action == 'reject') {
+      this.setData({ showRejectModal: true, rejectId: id, rejectReason: '' });
       return;
     }
 
     // 普通用户操作
     this.setData({
       currentAction: {
-        id,
-        index,
-        status,
+        id, index, status,
         deviceName: device.deviceName,
         location: device.address
       }
     });
 
-    // 取消预约
+    // 取消预约（状态：待审核/未通过）
     if (status == 0 || status == 1) {
       wx.showModal({
         title: '确认取消',
-        content: `设备：【${device.deviceName}】
-        拒绝理由：【${device.reject_reason}】`,
+        content: `设备：【${device.deviceName}】\n拒绝理由：【${device.reject_reason}】`,
         success: (res) => {
-          if (res.confirm) {
-            this.cancelReservation();
-          }
+          if (res.confirm) this.cancelReservation();
         }
       });
     }
 
-    // 归还设备
+    // 归还设备（状态：使用中）
     else if (status == 3) {
-
       wx.showModal({
-
         title: '归还确认',
-
         content: `确认已将设备【${device.deviceName}】归还至【${device.address}】吗？`,
-
         success: (res) => {
-
-          if (res.confirm) {
-
-            this.returnDevice();
-          }
+          if (res.confirm) this.returnDevice();
         }
       });
     }
   },
 
-  //拒绝
-  onRejectReasonInput(e){
-    this.setData({
-      rejectReason:e.detail.value
-    });
+  /** 拒绝原因输入绑定 */
+  onRejectReasonInput(e) {
+    this.setData({ rejectReason: e.detail.value });
   },
 
-  closeRejectModal(){
-    this.setData({
-      showRejectModal:false
-    });
+  /** 关闭拒绝理由弹窗 */
+  closeRejectModal() {
+    this.setData({ showRejectModal: false });
   },
 
-  // 普通用户 —— 取消预约
+  /** 普通用户——取消预约 */
   cancelReservation() {
     const { id } = this.data.currentAction;
-    wx.showLoading({
-      title: '取消中...',
-      mask: true
-    });
-
+    wx.showLoading({ title: '取消中...', mask: true });
     setTimeout(() => {
-      wx.request({
-        url:  config.baseUrl + '/reservation/cancel',
+      request({
+        url: config.baseUrl + '/reservation/cancel',
         method: 'POST',
         data: { id },
         success: () => {
           wx.hideLoading();
-          wx.showToast({
-            title: '已取消预约',
-            icon: 'success',
-            duration: 1200
-          });
-
-          setTimeout(() => {
-            this.getCurrentReservations();
-          }, 300);
+          wx.showToast({ title: '已取消预约', icon: 'success', duration: 1200 });
+          setTimeout(() => this.getCurrentReservations(), 300);
         },
-
         fail: (err) => {
-
           wx.hideLoading();
-
-          wx.showToast({
-            title: '取消失败',
-            icon: 'none'
-          });
-
+          wx.showToast({ title: '取消失败', icon: 'none' });
           console.log(err);
         }
       });
-
     }, 600);
   },
 
-  // 普通用户 —— 归还设备
+  /** 普通用户——归还设备 */
   returnDevice() {
     const { id } = this.data.currentAction;
-    wx.showLoading({
-      title: '归还中...',
-      mask: true
-    });
-
+    wx.showLoading({ title: '归还中...', mask: true });
     setTimeout(() => {
-
-      wx.request({
+      request({
         url: config.baseUrl + '/reservation/finish',
         method: 'POST',
         data: { id },
         success: () => {
           wx.hideLoading();
-          wx.showToast({
-            title: '归还成功',
-            icon: 'success',
-            duration: 1200
-          });
-
-          setTimeout(() => {
-
-            this.getCurrentReservations();
-
-          }, 300);
+          wx.showToast({ title: '归还成功', icon: 'success', duration: 1200 });
+          setTimeout(() => this.getCurrentReservations(), 300);
         },
-
         fail: (err) => {
-
           wx.hideLoading();
-
-          wx.showToast({
-            title: '归还失败',
-            icon: 'none'
-          });
-
+          wx.showToast({ title: '归还失败', icon: 'none' });
           console.log(err);
         }
       });
-
     }, 600);
   },
 
- 
-  // 管理员 —— 同意预约
-approveReservation(id) {
-  wx.showLoading({
-    title: '审批中...',
-    mask: true
-  });
-  setTimeout(() => {
-    wx.request({
-      url: config.baseUrl + '/reservation/approve',
-      method: 'POST',
-      data: { id },
-      success: (res) => {
-        wx.hideLoading();
-        console.log(res)
-        // ⭐ 库存充足
-        if(res.data){
-
-          wx.showToast({
-            title: '已同意',
-            icon: 'success'
-          });
-
-          setTimeout(() => {
-
-            this.getCurrentReservations();
-
-          }, 300);
-
-        }
-
-        // ⭐ 库存不足
-        else{
-
-          wx.showToast({
-            title: '设备库存不足',
-            icon: 'none'
-          });
-        }
-      },
-
-      fail: (err) => {
-
-        wx.hideLoading();
-
-        wx.showToast({
-          title: '操作失败',
-          icon: 'none'
-        });
-
-        console.log(err);
-      }
-    });
-
-  }, 600);
-},
-
- 
-  rejectReservation(){
-
-    const {
-  
-      rejectId,
-  
-      rejectReason
-  
-    } = this.data;
-  
-    if(!rejectReason){
-  
-      wx.showToast({
-  
-        title:'请输入拒绝理由',
-  
-        icon:'none'
-      });
-  
-      return;
-    }
-  
-    wx.showLoading({
-  
-      title:'处理中...',
-      mask:true
-    });
-  
-    setTimeout(()=>{
-  
-      wx.request({
-  
-        url:config.baseUrl + '/reservation/reject',
-  
-        method:'POST',
-  
-        data:{
-  
-          id:rejectId,
-  
-          rejectReason:rejectReason
-        },
-  
-        success:()=>{
-  
+  /** 管理员——审批通过（含库存校验） */
+  approveReservation(id) {
+    wx.showLoading({ title: '审批中...', mask: true });
+    setTimeout(() => {
+      request({
+        url: config.baseUrl + '/reservation/approve',
+        method: 'POST',
+        data: { id },
+        success: (res) => {
           wx.hideLoading();
-  
-          this.setData({
-  
-            showRejectModal:false
-          });
-  
-          wx.showToast({
-  
-            title:'已拒绝',
-            icon:'success'
-          });
-  
-          setTimeout(()=>{
-  
-            this.getCurrentReservations();
-  
-          },300);
+          console.log(res);
+          if (res.data) {
+            wx.showToast({ title: '已同意', icon: 'success' });
+            setTimeout(() => this.getCurrentReservations(), 300);
+          } else {
+            wx.showToast({ title: '设备库存不足', icon: 'none' });
+          }
         },
-  
-        fail:(err)=>{
-  
+        fail: (err) => {
           wx.hideLoading();
-  
-          wx.showToast({
-  
-            title:'操作失败',
-            icon:'none'
-          });
-  
+          wx.showToast({ title: '操作失败', icon: 'none' });
           console.log(err);
         }
-      })
-  
-    },600);
+      });
+    }, 600);
   },
+
+  /** 管理员——拒绝预约（需填写拒绝原因） */
+  rejectReservation() {
+    const { rejectId, rejectReason } = this.data;
+    if (!rejectReason) {
+      wx.showToast({ title: '请输入拒绝理由', icon: 'none' });
+      return;
+    }
+    wx.showLoading({ title: '处理中...', mask: true });
+    setTimeout(() => {
+      request({
+        url: config.baseUrl + '/reservation/reject',
+        method: 'POST',
+        data: { id: rejectId, rejectReason: rejectReason },
+        success: () => {
+          wx.hideLoading();
+          this.setData({ showRejectModal: false });
+          wx.showToast({ title: '已拒绝', icon: 'success' });
+          setTimeout(() => this.getCurrentReservations(), 300);
+        },
+        fail: (err) => {
+          wx.hideLoading();
+          wx.showToast({ title: '操作失败', icon: 'none' });
+          console.log(err);
+        }
+      });
+    }, 600);
+  }
 
 });
